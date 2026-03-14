@@ -245,19 +245,19 @@ Security Researcher
 
 <div class="social">
 
-<a href="https://facebook.com/ducanhzvn" target="_blank">
+<a href="https://facebook.com" target="_blank">
 <i class="fa-brands fa-facebook"></i>
 </a>
 
-<a href="https://tiktok.com/@ducanhdayy08" target="_blank">
+<a href="https://tiktok.com" target="_blank">
 <i class="fa-brands fa-tiktok"></i>
 </a>
 
-<a href="mailto:nguyenducanh6122008@gmail.com">
+<a href="mailto:test@gmail.com">
 <i class="fa-solid fa-envelope"></i>
 </a>
 
-<a href="https://discord.com/users/1221356804529721415" target="_blank">
+<a href="https://discord.com" target="_blank">
 <i class="fa-brands fa-discord"></i>
 </a>
 
@@ -272,7 +272,7 @@ Security Researcher
 
 <script>
 
-/* view counter */
+/* VIEW COUNTER */
 
 fetch("https://api.countapi.xyz/hit/ducanhvn/views")
 .then(res=>res.json())
@@ -280,8 +280,103 @@ fetch("https://api.countapi.xyz/hit/ducanhvn/views")
 document.getElementById("views").innerText=res.value
 })
 
-</script>
+/* RAIN */
 
+const rainCanvas=document.getElementById("rain");
+const rainCtx=rainCanvas.getContext("2d");
+
+function resizeRain(){
+const container=document.querySelector(".container");
+rainCanvas.width=container.offsetWidth;
+rainCanvas.height=container.offsetHeight;
+}
+
+resizeRain();
+window.addEventListener("resize",resizeRain);
+
+let drops=[];
+
+for(let i=0;i<200;i++){
+drops.push({
+x:Math.random()*rainCanvas.width,
+y:Math.random()*rainCanvas.height,
+l:Math.random()*20+10,
+s:Math.random()*5+5
+});
+}
+
+function drawRain(){
+
+rainCtx.clearRect(0,0,rainCanvas.width,rainCanvas.height);
+
+rainCtx.strokeStyle="rgba(174,194,224,0.5)";
+rainCtx.lineWidth=1;
+
+drops.forEach(d=>{
+
+rainCtx.beginPath();
+rainCtx.moveTo(d.x,d.y);
+rainCtx.lineTo(d.x,d.y+d.l);
+rainCtx.stroke();
+
+d.y+=d.s;
+
+if(d.y>rainCanvas.height){
+d.y=-20;
+d.x=Math.random()*rainCanvas.width;
+}
+
+});
+
+requestAnimationFrame(drawRain);
+
+}
+
+drawRain();
+
+/* LIGHTNING */
+
+const lightning=document.getElementById("lightning");
+const lctx=lightning.getContext("2d");
+
+lightning.width=rainCanvas.width;
+lightning.height=rainCanvas.height;
+
+function drawLightning(){
+
+let x=Math.random()*lightning.width;
+let y=0;
+
+lctx.strokeStyle="white";
+lctx.lineWidth=2;
+
+lctx.beginPath();
+lctx.moveTo(x,y);
+
+while(y<lightning.height){
+
+x+=(Math.random()-0.5)*40;
+y+=Math.random()*30;
+
+lctx.lineTo(x,y);
+
+}
+
+lctx.stroke();
+
+setTimeout(()=>{
+lctx.clearRect(0,0,lightning.width,lightning.height);
+},120);
+
+}
+
+setInterval(()=>{
+if(Math.random()>0.7){
+drawLightning();
+}
+},3000);
+
+</script>
 
 <script type="module">
 
@@ -298,8 +393,8 @@ const firebaseConfig = {
   measurementId: "G-R20C5K859Y"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+const app=initializeApp(firebaseConfig);
+const db=getDatabase(app);
 
 const userId=Math.random().toString(36).substring(7);
 
