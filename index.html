@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nguyễn Đức Anh</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
+background:#050505;
+color:white;
+display:flex;
+justify-content:center;
+min-height:100vh;
+overflow-x:hidden;
+}
+
+/* rain */
+
+#rain{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
+z-index:0;
+}
+
+#lightning{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:white;
+opacity:0;
+pointer-events:none;
+z-index:2;
+}
+
+/* container */
+
+.container{
+width:100%;
+max-width:500px;
+background:#0a0a0a;
+min-height:100vh;
+position:relative;
+z-index:3;
+}
+
+/* banner */
+
+.banner{
+width:100%;
+height:170px;
+background:url("https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExYWF0cTc1MjB2NTBmMzEzYXN1N203dm95czlwb2I0cXljOWRsdnE2cyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/UC8DbMqXvkpd6/giphy.gif") center/cover no-repeat;
+}
+
+/* profile */
+
+.profile{
+display:flex;
+align-items:center;
+gap:15px;
+padding:15px;
+margin-top:-45px;
+}
+
+/* avatar neon */
+
+.avatar{
+width:85px;
+height:85px;
+border-radius:50%;
+object-fit:cover;
+border:3px solid #1da1ff;
+animation:neon 3s infinite;
+}
+
+@keyframes neon{
+
+0%{box-shadow:0 0 10px #00f2ff,0 0 20px #00f2ff;border-color:#00f2ff;}
+25%{box-shadow:0 0 10px #ff00ff,0 0 20px #ff00ff;border-color:#ff00ff;}
+50%{box-shadow:0 0 10px #00ff9d,0 0 20px #00ff9d;border-color:#00ff9d;}
+75%{box-shadow:0 0 10px #ffee00,0 0 20px #ffee00;border-color:#ffee00;}
+100%{box-shadow:0 0 10px #00f2ff,0 0 20px #00f2ff;border-color:#00f2ff;}
+
+}
+
+/* name */
+
+.name h1{
+display:flex;
+align-items:center;
+gap:6px;
+font-size:22px;
+}
+
+.verify{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+width:18px;
+height:18px;
+background:#1da1ff;
+border-radius:50%;
+color:white;
+font-size:10px;
+}
+
+/* buttons */
+
+.buttons{
+display:flex;
+gap:10px;
+margin-top:8px;
+}
+
+.btn{
+padding:8px 14px;
+border-radius:8px;
+border:none;
+background:#1a1a1a;
+color:white;
+}
+
+.follow{
+background:#1da1ff;
+}
+
+/* stats */
+
+.stats{
+display:flex;
+gap:15px;
+padding:10px 15px;
+color:#aaa;
+flex-wrap:wrap;
+}
+
+/* badges */
+
+.badges{
+padding:10px 15px;
+}
+
+.badge{
+display:flex;
+align-items:center;
+gap:10px;
+background:#111;
+padding:12px;
+border-radius:10px;
+margin-bottom:10px;
+}
+
+/* about */
+
+.about{
+padding:15px;
+border-top:1px solid #222;
+}
+
+.role{
+color:#aaa;
+margin-top:5px;
+}
+
+/* social */
+
+.social{
+display:flex;
+gap:20px;
+font-size:22px;
+margin-top:10px;
+}
+
+.social a{
+color:white;
+cursor:pointer;
+}
+
+/* qr card */
+
+.qr-card{
+margin:20px 15px;
+background:#0e0e0e;
+border-radius:15px;
+padding:20px;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.qr-img{
+width:220px;
+height:220px;
+border-radius:10px;
+object-fit:cover;
+}
+
+/* popup */
+
+.info-box{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:999;
+}
+
+.info-content{
+background:#111;
+padding:25px;
+border-radius:12px;
+text-align:center;
+width:250px;
+}
+
+.info-content button{
+margin-top:15px;
+padding:8px 15px;
+border:none;
+border-radius:8px;
+background:#1da1ff;
+color:white;
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="rain"></canvas>
+<div id="lightning"></div>
+
+<div class="container">
+
+<div class="banner"></div>
+
+<div class="profile">
+
+<img src="avatar.png" class="avatar">
+
+<div class="name">
+
+<h1>
+Nguyễn Đức Anh
+<span class="verify">
+<i class="fa-solid fa-check"></i>
+</span>
+</h1>
+
+<div class="buttons">
+<button class="btn follow">Follow</button>
+<button class="btn">Message</button>
+<button class="btn">⌄</button>
+</div>
+
+</div>
+
+</div>
+
+<div class="stats">
+<span><b>1</b> Posts</span>
+<span><b>10Tr</b> Followers</span>
+<span><b>0</b> Following</span>
+<span><b id="online">0</b> Online</span>
+<span><b id="views">0</b> Views</span>
+</div>
+
+<div class="badges">
+
+<div class="badge">
+<i class="fa-solid fa-code"></i>
+Rust C# Python
+</div>
+
+<div class="badge">
+<i class="fa-solid fa-shield"></i>
+Security Researcher
+</div>
+
+<div class="badge">
+<i class="fa-solid fa-calendar"></i>
+3 Years Experience
+</div>
+
+</div>
+
+<div class="about">
+
+<h3>Nguyễn Đức Anh</h3>
+
+<p class="role">
+Info Me
+</p>
+
+<div class="social">
+
+<a onclick="showInfo()">
+<i class="fa-brands fa-facebook"></i>
+</a>
+
+<a href="https://tiktok.com/@ducanhdayy08" target="_blank">
+<i class="fa-brands fa-tiktok"></i>
+</a>
+
+<a href="mailto:nguyenducanh6122008@gmail.com">
+<i class="fa-solid fa-envelope"></i>
+</a>
+
+<a href="https://discord.com/users/1221356804529721415" target="_blank">
+<i class="fa-brands fa-discord"></i>
+</a>
+
+</div>
+
+</div>
+
+<div class="qr-card">
+<img src="qr-zalo.png" class="qr-img">
+</div>
+
+</div>
+
+<div id="infoBox" class="info-box">
+
+<div class="info-content">
+
+<h3>Facebook</h3>
+<p>facebook.com/ducanhzvn</p>
+
+<button onclick="closeInfo()">Close</button>
+
+</div>
+
+</div>
+
+<audio id="music" autoplay loop style="display:none;">
+<source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+/* rain */
+
+const canvas=document.getElementById("rain");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let rain=[];
+
+for(let i=0;i<200;i++){
+rain.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+l:Math.random()*20+10,
+s:Math.random()*5+5
+});
+}
+
+function drawRain(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+ctx.strokeStyle="rgba(174,194,224,0.5)";
+ctx.lineWidth=1;
+
+rain.forEach(r=>{
+
+ctx.beginPath();
+ctx.moveTo(r.x,r.y);
+ctx.lineTo(r.x,r.y+r.l);
+ctx.stroke();
+
+r.y+=r.s;
+
+if(r.y>canvas.height){
+r.y=-20;
+r.x=Math.random()*canvas.width;
+}
+
+});
+
+requestAnimationFrame(drawRain);
+
+}
+
+drawRain();
+
+/* lightning */
+
+function lightning(){
+
+const flash=document.getElementById("lightning");
+
+flash.style.opacity=0.8;
+
+setTimeout(()=>{
+flash.style.opacity=0;
+},100);
+
+}
+
+setInterval(()=>{
+if(Math.random()>0.7){
+lightning();
+}
+},3000);
+
+/* music */
+
+document.addEventListener("click",function(){
+document.getElementById("music").play();
+});
+
+/* popup */
+
+function showInfo(){
+document.getElementById("infoBox").style.display="flex";
+}
+
+function closeInfo(){
+document.getElementById("infoBox").style.display="none";
+}
+
+/* views */
+
+fetch("https://api.countapi.xyz/hit/ducanh-web/views")
+.then(res=>res.json())
+.then(res=>{
+document.getElementById("views").innerText=res.value;
+});
+
+/* online fake simple */
+
+let online=Math.floor(Math.random()*15)+1;
+document.getElementById("online").innerText=online;
+
+</script>
+
+</body>
+</html>
